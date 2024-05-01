@@ -1,36 +1,32 @@
-"""Welcome to Reflex! This file outlines the steps to create a basic app."""
-
-from rxconfig import config
-
 import reflex as rx
-
-docs_url = "https://reflex.dev/docs/getting-started/introduction/"
-filename = f"{config.app_name}/{config.app_name}.py"
-
+from pyreflex.components.navbar import navbar
+from pyreflex.components.footer import footer
+from pyreflex.views.header.header import header
+from pyreflex.links.links import links
+import pyreflex.styles.styles as styles
 
 class State(rx.State):
-    """The app state."""
-
+    pass
 
 def index() -> rx.Component:
-    return rx.center(
-        #rx.theme_panel(),
-        rx.vstack(
-            rx.heading("Welcome to Reflex!", size="9"),
-            rx.text("Get started by editing ", rx.code(filename)),
-            rx.button(
-                "Check out our docs!",
-                on_click=lambda: rx.redirect(docs_url),
-                size="4",
-            ),
-            rx.logo(),
-            align="center",
-            spacing="7",
-            font_size="2em",
+    return rx.box(
+        navbar(),
+        rx.center(
+            rx.vstack(
+                header(),
+                links(),
+                max_width=styles.MAX_WIDTH,
+                width="100%",
+                align="center",
+                margin_y=styles.Spacer.BIG.value 
+            )
         ),
-        height="100vh",
+        rx.center(
+            footer()
+        )
     )
-
-
+    
+    
 app = rx.App()
 app.add_page(index)
+app.compile()
